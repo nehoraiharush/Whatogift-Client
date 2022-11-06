@@ -67,10 +67,13 @@ export const TabsNavigator = () => {
         <AppTabs.Navigator>
             <AppTabs.Screen name='dashboardTab' component={DashboardStack}
                 options={{ tabBarLabel: 'Dashboard', tabBarIcon: () => (<MaterialCommunityIcons name='view-grid' size={28} />) }} />
+
             <AppTabs.Screen name='favoriteTab' component={FavoriteStack}
                 options={{ tabBarLabel: 'Favorite', tabBarIcon: () => (<MaterialCommunityIcons name='cards-heart' size={28} />) }} />
+
             <AppTabs.Screen name='giftTab' component={GiftStack}
                 options={{ tabBarLabel: 'Gift', tabBarIcon: () => (<MaterialCommunityIcons name='gift-outline' size={28} />) }} />
+
             <AppTabs.Screen name='profileTab' component={ProfileStack}
                 options={{ tabBarLabel: 'Profile', tabBarIcon: () => (<Ionicons name='person-circle' size={28} />) }} />
         </AppTabs.Navigator>
