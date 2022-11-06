@@ -5,8 +5,9 @@ const Test = () => {
     return (
         <View style={Style.container}>
             <Text>
-                Dashboard Test
+                Profile Test
             </Text>
+
         </View>
     );
 }

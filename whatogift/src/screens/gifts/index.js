@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import Style from '../../utilies/AppStyle';
 
-const Gift = () => {
+const Gift = (props) => {
     return (
         <View style={Style.container}>
             <Text>
                 Gift
             </Text>
+            <Button onPress={() => { props.navigation.navigate('Gifts Test') }} title='Go to Test'></Button>
         </View>
     );
 }

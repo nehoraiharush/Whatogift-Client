@@ -5,7 +5,7 @@ const Test = () => {
     return (
         <View style={Style.container}>
             <Text>
-                Dashboard Test
+                Favorite Test
             </Text>
         </View>
     );
