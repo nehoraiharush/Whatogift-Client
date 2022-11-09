@@ -18,6 +18,11 @@ import FavoriteTest from '../screens/favorite/Test';
 import profileTest from '../screens/profile/Test';
 import giftsTest from '../screens/gifts/Test';
 
+//IMPORTS INTERFACE
+import Login from '../screens/account/Login.js';
+import Register from '../screens/account/Register.js';
+import Verify from '../screens/account/Verify.js';
+
 
 //CREATE STACK
 const DashboardStackNavigator = createNativeStackNavigator();
@@ -60,6 +65,18 @@ export const GiftStack = () => {
     );
 }
 
+// CREATE ACCOUNT STACK
+const AccountStackNavigator = createNativeStackNavigator();
+export const AccountStack = () => {
+    return (
+        <AccountStackNavigator.Navigator>
+            <AccountStackNavigator.Screen name='Login' component={Login} />
+            <AccountStackNavigator.Screen name='Register' component={Register} />
+            <AccountStackNavigator.Screen name='Verify' component={Verify} />
+        </AccountStackNavigator.Navigator>
+    )
+}
+
 //CREATE TABS
 const AppTabs = createMaterialBottomTabNavigator();
 export const TabsNavigator = () => {
@@ -79,3 +96,4 @@ export const TabsNavigator = () => {
         </AppTabs.Navigator>
     );
 }
+
