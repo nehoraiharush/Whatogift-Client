@@ -3,6 +3,7 @@ import { View, Text, Alert } from 'react-native';
 import Style from '../../utilies/AppStyle.js';
 import { ActivityIndicator, Button, TextInput } from 'react-native-paper';
 import Color from '../../utilies/AppColors.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
 
@@ -33,8 +34,23 @@ const Login = (props) => {
 
                 const data = await response.json();
                 if (data.status) {
+
+                    AsyncStorage.setItem('Token', JSON.stringify({
+                        token: data.token
+                    }));
+
+                    // const overView_url = 'http://10.70.3.187:3001/api/account/getOverView';
+                    // const overView_res = await fetch(overView_url, {
+                    //     method: 'get',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'Authorization': `Bearer ${data.token}`
+                    //     }
+                    // });
+
+                    // const overView_data = await overView_res.json();
+                    // setErrorMsg(overView_data.message);
                     setLoading(false);
-                    setErrorMsg(data.token);
                 } else {
                     setLoading(false);
                     setErrorMsg(data.message);
@@ -69,7 +85,6 @@ const Login = (props) => {
                 secureTextEntry
                 right={<TextInput.Icon icon="eye" />}
             />
-            <Button onPress={() => { setLoading(false) }}>set false</Button>
 
 
             {
