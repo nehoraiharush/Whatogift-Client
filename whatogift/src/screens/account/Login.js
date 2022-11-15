@@ -38,18 +38,6 @@ const Login = (props) => {
                     AsyncStorage.setItem('Token', JSON.stringify({
                         token: data.token
                     }));
-
-                    // const overView_url = 'http://10.70.3.187:3001/api/account/getOverView';
-                    // const overView_res = await fetch(overView_url, {
-                    //     method: 'get',
-                    //     headers: {
-                    //         'Content-Type': 'application/json',
-                    //         'Authorization': `Bearer ${data.token}`
-                    //     }
-                    // });
-
-                    // const overView_data = await overView_res.json();
-                    // setErrorMsg(overView_data.message);
                     setLoading(false);
                 } else {
                     setLoading(false);
