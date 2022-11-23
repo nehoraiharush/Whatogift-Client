@@ -6,4 +6,7 @@ export default {
     dark_blue: '#16697a',
     white: '#ffffff',
     black: '#000000',
+    ligh_cyan: '#CBF3F0',
+    dark_turquoise: '#0BC9CD',
+    pink: '#E54F6D'
 }
