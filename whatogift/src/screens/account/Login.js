@@ -4,6 +4,8 @@ import Style from '../../utilies/AppStyle.js';
 import { ActivityIndicator, Button, TextInput } from 'react-native-paper';
 import Color from '../../utilies/AppColors.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as actions from '../../../store/actions';
+import { useDispatch } from 'react-redux';
 
 const Login = (props) => {
 
@@ -11,6 +13,7 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (errorMsg) {
@@ -21,37 +24,21 @@ const Login = (props) => {
     const login = async () => {
         setLoading(true);
         if (email != '' && password != '') {
+            const action = actions.login(email, password);
             try {
-                const url = 'http://10.70.3.187:3001/api/account/login'
-                const response = await fetch(url, {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    }),
-                });
-
-                const data = await response.json();
-                if (data.status) {
-
-                    AsyncStorage.setItem('Token', JSON.stringify({
-                        token: data.token
-                    }));
-                    setLoading(false);
-                } else {
-                    setLoading(false);
-                    setErrorMsg(data.message);
-                }
-
-            } catch (error) {
+                dispatch(action);
                 setLoading(false);
-                setErrorMsg(error.message);
+            } catch (error) {
+                setErrorMsg(error)
             }
+
         } else {
+            setErrorMsg('Email and Password are required');
             setLoading(false);
-            setErrorMsg('All input required');
         }
+
+
+
     }
 
     return (

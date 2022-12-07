@@ -12,11 +12,10 @@ const Dashboard = (props) => {
 
 
     const getDataFromAsync = useCallback(async () => {
-        const dataFromAsync = await AsyncStorage.getItem('Token');
+        const dataFromAsync = await AsyncStorage.getItem('Account');
         if (dataFromAsync != null) {
             const data = await JSON.parse(dataFromAsync);
             setToken(data.token);
-        } else {
 
         }
     }, [setToken]);
