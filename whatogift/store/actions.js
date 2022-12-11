@@ -1,8 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
+
+export const logout = () => {
+    AsyncStorage.removeItem('Account');
+    return {
+        type: LOGOUT
+    }
+}
 
 export const loginDispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: LOGIN, data });
+    }
+}
+
+export const getAllCompaniesByLocationDispatch = () => {
     return dispatch => {
         dispatch({ type: LOGIN, data });
     }
@@ -11,7 +26,7 @@ export const loginDispatch = (data) => {
 export const login = (email, password) => {
     return async dispatch => {
         try {
-            const url = 'http://10.70.3.187:3001/api/account/login';
+            const url = 'http://10.0.0.15:3001/api/account/login';
             const req = await fetch(url, {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
@@ -31,9 +46,40 @@ export const login = (email, password) => {
                     email: data.message.email,
                     avatar: data.message.avatar
                 }));
+                dispatch(loginDispatch(data));
 
-                dispatch(loginDispatch(data))
-                //console.log(JSON.stringify(data))
+            } else {
+                let message = data.message;
+                throw new Error(message);
+            }
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+}
+
+
+
+export const getAllCompaniesByLocation = (token, location) => {
+    return async dispatch => {
+        try {
+            const url = 'http://10.0.0.15:3001/api/company/get_companies_by_location';
+            const req = await fetch(url, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude
+                }),
+            });
+            const data = await req.json();
+            if (data.status) {
+                console.log(JSON.stringify(data));
+                dispatch(getAllCompaniesByLocationDispatch(data.message));
 
             } else {
                 let message = data.message;

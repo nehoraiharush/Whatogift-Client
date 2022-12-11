@@ -1,4 +1,4 @@
-import { LOGIN } from './actions';
+import { LOGIN, GETALLCOMPANIESBYLOCATION } from './actions';
 
 const initialState = {
 
@@ -11,7 +11,11 @@ export default (state = initialState, action) => {
                 ...state,
                 appReducer: action.data
             }
-
+        case GETALLCOMPANIESBYLOCATION:
+            return {
+                ...state,
+                appReducer: action.data
+            }
 
         default:
             return state;

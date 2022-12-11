@@ -11,8 +11,10 @@ const Login = (props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,20 +31,19 @@ const Login = (props) => {
                 dispatch(action);
                 setLoading(false);
             } catch (error) {
-                setErrorMsg(error)
+                setErrorMsg(error);
             }
 
         } else {
             setErrorMsg('Email and Password are required');
             setLoading(false);
         }
-
-
-
     }
 
     return (
+
         <View style={Style.container}>
+
             <Text style={{ fontSize: 25, marginBottom: 30, fontWeight: '700' }}>Login</Text>
 
             <TextInput
@@ -69,7 +70,8 @@ const Login = (props) => {
             <View style={{ alignItems: 'center' }}>
                 <Text style={{ marginTop: 20 }} onPress={() => props.navigation.navigate('Register')}>Dont have an account? press here</Text>
             </View>
-        </View>
+
+        </View >
     )
 }
 
