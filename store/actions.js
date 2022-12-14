@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const IP = '10.0.0.12';
+
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
@@ -26,7 +28,7 @@ export const getAllCompaniesByLocationDispatch = () => {
 export const login = (email, password) => {
     return async dispatch => {
         try {
-            const url = 'http://192.168.1.153:3001/api/account/login';
+            const url = `http://${IP}:3001/api/account/login`;
             const req = await fetch(url, {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
@@ -64,7 +66,7 @@ export const login = (email, password) => {
 export const getAllCompaniesByLocation = (token, location) => {
     return async dispatch => {
         try {
-            const url = 'http://192.168.1.153:3001/api/company/get_companies_by_location';
+            const url = `http://${IP}:3001/api/company/get_companies_by_location`;
             const req = await fetch(url, {
                 method: 'post',
                 headers: {
