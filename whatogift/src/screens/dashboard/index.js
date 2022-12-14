@@ -57,7 +57,6 @@ const Dashboard = (props) => {
 
                 try {
                     dispatch(action);
-                    setIsLoading(false);
 
                 } catch (error) {
                     setErrorMsg(error.message)

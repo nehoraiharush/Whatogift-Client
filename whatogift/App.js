@@ -26,7 +26,8 @@ export default function App() {
     const dataFromAsync = await AsyncStorage.getItem('Account');
     if (dataFromAsync != null) {
       const data = JSON.parse(dataFromAsync);
-      setToken(data.token)
+      setToken(data.token);
+      console.log(data.token);
       setIsLogin(true);
     } else {
       setIsLogin(false);
