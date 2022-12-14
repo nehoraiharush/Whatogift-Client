@@ -170,7 +170,7 @@ const Gift = (props) => {
                 </View>
                 <Slider
                     value={budget}
-                    step={100}
+                    step={200}
                     maximumValue={3000}
                     minimumValue={100}
                     onValueChange={value => setBudget([value[0], value[1]])}
