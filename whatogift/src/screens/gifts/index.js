@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Button, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import Style from '../../utilies/AppStyle';
 import { Slider } from '@miblanchard/react-native-slider';
 import Tags from "react-native-tags";
+import { AutocompleteTags } from 'react-native-autocomplete-tags'
 
 const Gift = (props) => {
+
+    const suggestions = ['apple', 'orange', 'banana', 'kiwi'];
+
+    const [tags, setTags] = useState([]);
 
     const events = [
         { name: 'Wedding' },
@@ -16,7 +21,7 @@ const Gift = (props) => {
     const [inverts, setInverts] = useState([]);
     const [age, setAge] = useState(0);
     const [locationRadius, setLocationRadius] = useState({});
-    const [related, setRelated] = useState(1);
+    const [related, setRelated] = useState(0);
     const relationsArr = [
         "First Circle: Mom & Dad & Siblings",
         "Second Circle: Cousins",
@@ -29,9 +34,9 @@ const Gift = (props) => {
     return (
         <View style={Style.container}>
 
-            <Text style={{ fontSize: 20, textAlign: 'center' }}>Value: {related} :
+            <Text style={{ fontSize: 20, textAlign: 'center', paddingBottom: 50 }}>Value: {related} :
                 {
-                    <Text style={{ fontSize: 20, textAlign: 'center', left: 0, right: 0 }}> {relationsArr[related - 1]}</Text>
+                    <Text style={{ fontSize: 20, textAlign: 'center' }}> {relationsArr[related - 1]}</Text>
                 }
             </Text>
             <Slider
@@ -40,22 +45,42 @@ const Gift = (props) => {
                 maximumValue={5}
                 minimumValue={0}
                 onValueChange={value => setRelated(value)}
+
             />
 
-
-            <Tags
-
-                containerStyle={{ justifyContent: "center", paddingTop: 10 }}
-                inputStyle={{ backgroundColor: "white", borderRadius: 20 }}
-                renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
-                    <TouchableOpacity style={{ paddingRight: 5 }} key={`${tag}-${index}`} onPress={onPress}>
-                        <Text>#{tag},</Text>
-                    </TouchableOpacity>
-                )}
-            />
+            <View style={[styles.rowContainer]}>
+                <AutocompleteTags
+                    tags={tags}
+                    suggestions={suggestions}
+                    labelExtractor={(item) => item}
+                    suggestionExtractor={(item) => item}
+                    onChangeTags={(tags) => setTags(tags)}
+                    onAddNewTag={(input) => {
+                        if (!tags.includes('#' + input)) {
+                            if (tags.length > 0) {
+                                setTags((tags) => [...tags, '#' + input]);
+                            }
+                            else {
+                                setTags(['#' + input])
+                            }
+                        }
+                    }}
+                    containerStyle={{ backgroundColor: 'white', padding: 10, borderRadius: 20 }}
+                />
+            </View>
 
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    rowContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+});
 
 export default Gift;

@@ -31,7 +31,8 @@ const Login = (props) => {
                 dispatch(action);
                 setLoading(false);
             } catch (error) {
-                setErrorMsg(error);
+                setErrorMsg(error.message);
+                throw new Error(errorMsg)
             }
 
         } else {

@@ -60,6 +60,7 @@ const Dashboard = (props) => {
 
                 } catch (error) {
                     setErrorMsg(error.message)
+                    throw new Error(errorMsg)
                 }
             }
 
