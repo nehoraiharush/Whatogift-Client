@@ -12,7 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import reducers from './store/reducers';
 
 const rootReducer = combineReducers({
-  appReducer: reducers
+  appReducer: reducers,
+  giftReducer: reducers
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
@@ -27,7 +28,6 @@ export default function App() {
     if (dataFromAsync != null) {
       const data = JSON.parse(dataFromAsync);
       setToken(data.token);
-      console.log(data.token);
       setIsLogin(true);
     } else {
       setIsLogin(false);

@@ -14,6 +14,7 @@ const Dashboard = (props) => {
     const [token, setToken] = useState('');
     const [errorMsg, setErrorMsg] = useState(null);
     const [location, setLocation] = useState(null);
+    const [companiesData, setCompaniesData] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -52,8 +53,7 @@ const Dashboard = (props) => {
             setLocation(location);
 
             if (token && location) {
-                console.log(location);
-                const action = actions.getAllCompaniesByLocation(token, location);
+                const action = await actions.getAllCompaniesByLocation(token, location);
 
                 try {
                     dispatch(action);
@@ -67,7 +67,6 @@ const Dashboard = (props) => {
         })();
     }, []);
 
-    //console.log(token);
 
     return (
         <View style={Style.container}>
@@ -75,7 +74,7 @@ const Dashboard = (props) => {
                 Dashboard
             </Text>
 
-            <View style={{ width: '100%', backgroundColor: '#DFE0E0', padding: 10, marginTop: 10, borderRadius: 15 }}>
+            <View style={{ width: '100%', backgroundColor: '#DFE0E0', padding: 10, marginTop: 10, borderRadius: 20, marginBottom: 15 }}>
                 <Text style={{ textAlign: 'center' }}>
                     HII
                 </Text>

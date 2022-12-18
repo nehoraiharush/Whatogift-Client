@@ -26,7 +26,7 @@ const Login = (props) => {
     const login = async () => {
         setLoading(true);
         if (email != '' && password != '') {
-            const action = actions.login(email, password);
+            const action = await actions.login(email, password);
             try {
                 dispatch(action);
                 setLoading(false);
