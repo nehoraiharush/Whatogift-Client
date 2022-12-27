@@ -18,7 +18,6 @@ import Profile from '../screens/profile';
 import DashTest from '../screens/dashboard/Test';
 import FavoriteTest from '../screens/favorite/Test';
 import profileTest from '../screens/profile/Test';
-import giftsTest from '../screens/gifts/Test';
 
 //IMPORTS INTERFACE
 import Login from '../screens/account/Login.js';
@@ -68,7 +67,6 @@ export const GiftStack = () => {
     return (
         <GiftsStackNavigator.Navigator screenOptions={defaultOptions}>
             <GiftsStackNavigator.Screen name='gifts' component={Gift} />
-            <GiftsStackNavigator.Screen name='Gifts Test' component={giftsTest} />
         </GiftsStackNavigator.Navigator>
     );
 }

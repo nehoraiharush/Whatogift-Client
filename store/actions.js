@@ -1,13 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const IP = '10.0.0.10';
-
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
 export const GET_GIFTS = "GET_GIFTS"
-
-
+const IP = '10.70.0.255';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -58,11 +54,52 @@ export const login = (email, password) => {
     }
 }
 
+export const signup = (email, password, firstName, lastName, uid) => {
+    return async dispatch => {
+        try {
+            const url = `http://${IP}:3001/api/account/signUp`;
+            const req = await fetch(url, {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    uid: uid
+                }),
+            });
+            const data = await req.json();
+            if (data.status) {
+
+                AsyncStorage.setItem('Account', JSON.stringify({
+                    token: data.token,
+                    _id: data.message._id,
+                    firstName: data.message.firstName,
+                    lastName: data.message.lastName,
+                    email: data.message.email,
+                    avatar: data.message.avatar
+                }));
+                dispatch(loginDispatch(data));
+
+            } else {
+                let message = data.message;
+                throw new Error(message);
+            }
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+}
+
 export const getAllCompaniesByLocationDispatch = () => {
     return dispatch => {
         dispatch({ type: LOGIN, data });
     }
 }
+
+
 
 export const getAllCompaniesByLocation = (token, location) => {
     return async dispatch => {
@@ -106,10 +143,10 @@ export const find_gift = (
     gender, budget, interestsTags,
     age, locationRadius, related
 ) => {
+    console.log(token);
     return async dispatch => {
         try {
             const url = `http://${IP}:3001/api/product/get_all_products`;
-            console.log("token")
             const req = await fetch(url, {
                 method: 'post',
                 headers: {
@@ -129,7 +166,6 @@ export const find_gift = (
                     related: related
                 })
             });
-            console.log("token2")
             req.json()
                 .then(data => {
                     if (data.status) {

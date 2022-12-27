@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
         case GET_GIFTS:
             return {
                 ...state,
-                appReducer: action.data
+                giftList: action.data
             }
         default:
             return state;

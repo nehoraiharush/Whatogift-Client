@@ -9,7 +9,11 @@ import * as actions from '../../../store/actions';
 import { useDispatch } from 'react-redux';
 import * as Location from 'expo-location';
 
+import firebase from "../../utilies/firebaseConfig";
+
 const Dashboard = (props) => {
+
+    const user = firebase.auth().currentUser;
 
     const [token, setToken] = useState('');
     const [errorMsg, setErrorMsg] = useState(null);
@@ -71,7 +75,7 @@ const Dashboard = (props) => {
     return (
         <View style={Style.container}>
             <Text>
-                Dashboard
+                {user.email}
             </Text>
 
             <View style={{ width: '100%', backgroundColor: '#DFE0E0', padding: 10, marginTop: 10, borderRadius: 20, marginBottom: 15 }}>
@@ -79,7 +83,7 @@ const Dashboard = (props) => {
                     HII
                 </Text>
             </View>
-            <Button onPress={() => { dispatch(actions.logout()) }} title='Logout' />
+            <Button onPress={() => { firebase.auth().signOut() }} title='Logout' />
 
         </View>
     );
