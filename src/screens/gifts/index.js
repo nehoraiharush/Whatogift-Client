@@ -111,7 +111,6 @@ const Gift = (props) => {
     }, [hasToken])
 
     const find_gift_action = useCallback(async => {
-        console.log("SDSDSD")
         setModalVisible(false)
         try {
             const action = actions.find_gift(
@@ -280,8 +279,9 @@ const Gift = (props) => {
             {
                 giftData ?
                     (
+
                         <FlatList
-                            data={giftData.giftList.message}
+                            data={giftData?.giftList?.message}
                             keyExtractor={(company) => company._id}
                             renderItem={comapny =>
                                 <GiftItem gift={comapny.item} />

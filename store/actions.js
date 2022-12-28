@@ -3,7 +3,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
 export const GET_GIFTS = "GET_GIFTS"
-const IP = '10.70.0.255';
+const IP = '10.0.0.16';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -177,10 +177,8 @@ export const find_gift = (
                 .catch(err => {
                     console.log(err.message);
                 });
-
-
         } catch (error) {
-            console.log("ERRRRRRR" + JSON.stringify(error));
+            console.log("ERRRRRRR" + JSON.stringify(error.message));
         }
     }
 }
