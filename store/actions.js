@@ -3,7 +3,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
 export const GET_GIFTS = "GET_GIFTS"
-const IP = '10.0.0.16';
+const IP = '10.0.0.17';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -169,6 +169,7 @@ export const find_gift = (
             req.json()
                 .then(data => {
                     if (data.status) {
+                        console.log(data)
                         dispatch(find_gift_dispatch(data))
                     } else {
                         console.log("No data for you");
