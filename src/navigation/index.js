@@ -13,6 +13,7 @@ import Dashboard, { screenOptions as DashboardScreenOptions } from '../screens/d
 import Favorite from '../screens/favorite';
 import Gift from '../screens/gifts';
 import Profile from '../screens/profile';
+import ViewGift from '../screens/gifts/ViewGift.js';
 
 //TEST IMPORTS
 import DashTest from '../screens/dashboard/Test';
@@ -67,6 +68,7 @@ export const GiftStack = () => {
     return (
         <GiftsStackNavigator.Navigator screenOptions={defaultOptions}>
             <GiftsStackNavigator.Screen name='gifts' component={Gift} />
+            <GiftsStackNavigator.Screen name='viewGift' component={ViewGift} />
         </GiftsStackNavigator.Navigator>
     );
 }

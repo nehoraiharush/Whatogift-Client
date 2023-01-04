@@ -1,4 +1,4 @@
-import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS } from './actions';
+import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS, UPDATE_WISHLIST } from './actions';
 
 const initialState = {
 
@@ -21,6 +21,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 giftList: action.data
+            }
+        case UPDATE_WISHLIST:
+            return {
+                ...state,
+                wishlist: action.data
             }
         default:
             return state;

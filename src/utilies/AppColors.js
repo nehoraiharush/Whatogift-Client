@@ -8,5 +8,6 @@ export default {
     black: '#000000',
     ligh_cyan: '#CBF3F0',
     dark_turquoise: '#0BC9CD',
-    pink: '#E54F6D'
+    pink: '#E54F6D',
+    red: '#E63946'
 }

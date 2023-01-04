@@ -12,7 +12,8 @@ import firebase from './src/utilies/firebaseConfig';
 import reducers from './store/reducers';
 const rootReducer = combineReducers({
   appReducer: reducers,
-  giftList: reducers
+  giftList: reducers,
+  wishlist: reducers
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 

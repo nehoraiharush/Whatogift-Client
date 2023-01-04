@@ -70,7 +70,7 @@ const Gift = (props) => {
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     }, []);
-
+    //find location
     useEffect(() => {
         (async () => {
 
@@ -96,7 +96,7 @@ const Gift = (props) => {
 
         })();
     }, []);
-
+    //find token
     const hasToken = useCallback(async () => {
 
         const dataFromAsync = await AsyncStorage.getItem('Account');
@@ -126,7 +126,7 @@ const Gift = (props) => {
     })
 
     const giftData = useSelector((state) => state.giftList);
-    console.log("My Gifts: " + JSON.stringify(giftData))
+    //console.log("My Gifts: " + JSON.stringify(giftData))
 
     return (
         <View style={Style.container}>
@@ -282,9 +282,9 @@ const Gift = (props) => {
 
                         <FlatList
                             data={giftData?.giftList?.message}
-                            keyExtractor={(company) => company._id}
+                            keyExtractor={(company) => company.product._id}
                             renderItem={comapny =>
-                                <GiftItem gift={comapny.item} />
+                                <GiftItem gift={comapny.item} onClick={() => props.navigation.navigate('viewGift', { product: comapny.item })} />
                             } />
                     ) :
                     (

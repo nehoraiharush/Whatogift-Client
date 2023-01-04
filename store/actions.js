@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION'
-export const GET_GIFTS = "GET_GIFTS"
-const IP = '10.0.0.17';
+export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
+export const GET_GIFTS = "GET_GIFTS";
+export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
+const IP = '10.70.1.186';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -130,6 +131,48 @@ export const getAllCompaniesByLocation = (token, location) => {
             throw new Error(error.message);
         }
     }
+}
+
+
+export const updateWishListDispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: UPDATE_WISHLIST, data });
+    }
+}
+
+export const updateWishList = (token, favoriets, typeOfAction) => {
+    return async dispatch => {
+        try {
+            const url = `http://${IP}:3001/api/account/add_to_favorites`;
+            const req = await fetch(url, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+
+                },
+                body: JSON.stringify({
+                    favorites: favoriets,
+                    typeOfAction: typeOfAction
+                })
+            });
+            req.json()
+                .then(data => {
+                    if (data.status) {
+                        dispatch(updateWishListDispatch(data))
+                    } else {
+                        console.log("No data for you");
+                    }
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
+
+        } catch (err) {
+            console.log("ERROR" + JSON.stringify(err.message));
+        }
+    }
+
 }
 
 

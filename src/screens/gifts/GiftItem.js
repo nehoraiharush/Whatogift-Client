@@ -9,7 +9,7 @@ const GiftItem = props => {
     const product = props.gift.product;
 
     return (
-        <TouchableOpacity onPress={props.onclick} style={styles.row}>
+        <TouchableOpacity onPress={props.onClick} style={styles.row}>
             <View style={styles.product_row}>
                 <View style={styles.image_container}>
                     <View style={styles.brand}>

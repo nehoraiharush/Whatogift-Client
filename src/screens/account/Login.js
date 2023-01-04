@@ -147,7 +147,7 @@ const Login = (props) => {
 
 
                             {
-                                isLoading ? (<ActivityIndicator style={{ marginTop: 20 }} color={Color.ocean} size="large" />) : (<Button style={{ marginTop: 30 }} icon="send" mode="contained" onPress={signup}>SIGNUP</Button>)
+                                isLoading ? (<ActivityIndicator style={{ marginTop: 20 }} color={Color.ocean} size="large" />) : (<Button style={{ marginTop: 30 }} icon="send" mode="contained" onPress={signup}>SIGN UP</Button>)
                             }
 
                             <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => setLoginView(true)}>
