@@ -4,7 +4,8 @@ export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
 export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
-const IP = '10.70.1.186';
+export const GET_WISHLIST = "GET_WISHLIST";
+const IP = '10.0.0.20';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -15,7 +16,7 @@ export const logout = () => {
 
 export const loginDispatch = (data) => {
     return dispatch => {
-        dispatch({ type: LOGIN, data });
+        dispatch({ type: LOGIN, data: data });
     }
 }
 
@@ -94,14 +95,13 @@ export const signup = (email, password, firstName, lastName, uid) => {
     }
 }
 
+
+
 export const getAllCompaniesByLocationDispatch = () => {
     return dispatch => {
-        dispatch({ type: LOGIN, data });
+        dispatch({ type: LOGIN, data: data });
     }
 }
-
-
-
 export const getAllCompaniesByLocation = (token, location) => {
     return async dispatch => {
         try {
@@ -136,10 +136,9 @@ export const getAllCompaniesByLocation = (token, location) => {
 
 export const updateWishListDispatch = (data) => {
     return dispatch => {
-        dispatch({ type: UPDATE_WISHLIST, data });
+        dispatch({ type: UPDATE_WISHLIST, data: data });
     }
 }
-
 export const updateWishList = (token, favoriets, typeOfAction) => {
     return async dispatch => {
         try {
@@ -161,24 +160,23 @@ export const updateWishList = (token, favoriets, typeOfAction) => {
                     if (data.status) {
                         dispatch(updateWishListDispatch(data))
                     } else {
-                        console.log("No data for you");
+                        console.log("WishList: No data for you");
                     }
                 })
                 .catch(err => {
-                    console.log(err.message);
+                    console.log("UPDATE_WISHLIST: " + JSON.stringify(err.message));
                 });
 
         } catch (err) {
-            console.log("ERROR" + JSON.stringify(err.message));
+            console.log("update_wishlist: " + JSON.stringify(err.message));
         }
     }
-
 }
 
 
 export const find_gift_dispatch = (data) => {
     return dispatch => {
-        dispatch({ type: GET_GIFTS, data });
+        dispatch({ type: GET_GIFTS, data: data });
     }
 }
 export const find_gift = (
@@ -186,7 +184,6 @@ export const find_gift = (
     gender, budget, interestsTags,
     age, locationRadius, related
 ) => {
-    console.log(token);
     return async dispatch => {
         try {
             const url = `http://${IP}:3001/api/product/get_all_products`;
@@ -212,17 +209,56 @@ export const find_gift = (
             req.json()
                 .then(data => {
                     if (data.status) {
-                        console.log(data)
                         dispatch(find_gift_dispatch(data))
                     } else {
-                        console.log("No data for you");
+                        console.log("Find Gift: No data for you");
                     }
                 })
                 .catch(err => {
                     console.log(err.message);
                 });
         } catch (error) {
-            console.log("ERRRRRRR" + JSON.stringify(error.message));
+            console.log("find_gift: " + JSON.stringify(error.message));
         }
     }
+}
+
+
+export const get_wishlist_dispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: GET_WISHLIST, data: data });
+    }
+}
+export const get_wishlist = (token) => {
+
+    return async dispatch => {
+        try {
+
+            const url = `http://${IP}:3001/api/account/get_wishlist`;
+            const req = await fetch(url, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+            req.json()
+                .then(data => {
+                    if (data.status) {
+
+                        dispatch(get_wishlist_dispatch(data));
+
+                    } else {
+                        console.log("GET WISHLIST: No data Found");
+                    }
+                })
+                .catch(err => {
+                    console.log("GET WISHLIST: " + JSON.stringify(err.message));
+                });
+
+        } catch (error) {
+            console.log("get_wishlist: " + JSON.stringify(error.message))
+        }
+    }
+
 }

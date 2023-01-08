@@ -14,7 +14,7 @@ const ViewGift = (props) => {
     const product = props.route.params.product.product;
     const distance = props.route.params.product.distance;
 
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(null);
     const [typeOfAction, setTypeOfAction] = useState(null);
 
     const [token, setToken] = useState('');
@@ -24,6 +24,7 @@ const ViewGift = (props) => {
     //and it doesnt remove when i undo the heart mark
     useEffect(() => {
         setIsLiked(!isLiked);
+
         updateWishList();
     }, [typeOfAction]);
 
@@ -53,10 +54,6 @@ const ViewGift = (props) => {
         }
 
     })
-
-    const favoriets_gift = useSelector((state) => state.wishlist.giftList?.message);
-    console.log("My Favorites Gifts: " + JSON.stringify(favoriets_gift));
-
     return (
         <View style={{ flex: 1 }}>
 
@@ -80,11 +77,19 @@ const ViewGift = (props) => {
                     </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={() => { setTypeOfAction(true) }}>
+                    <TouchableOpacity onPress={() => { setTypeOfAction(!typeOfAction) }}>
                         {isLiked ?
-                            (<Ionicons name="ios-heart" size={40} color={Colors.red} />)
+                            (
+                                <TouchableOpacity onPress={() => { setTypeOfAction(false) }}>
+                                    <Ionicons name="ios-heart" size={40} color={Colors.red} />
+                                </TouchableOpacity>
+                            )
                             :
-                            (<Ionicons name="ios-heart-outline" size={40} color={Colors.red} />)
+                            (
+                                <TouchableOpacity onPress={() => { setTypeOfAction(true) }}>
+                                    <Ionicons name="ios-heart-outline" size={40} color={Colors.white} />
+                                </TouchableOpacity>
+                            )
                         }
                     </TouchableOpacity>
 

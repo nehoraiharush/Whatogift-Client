@@ -28,7 +28,6 @@ export default function App() {
     if (dataFromAsync != null) {
       const data = JSON.parse(dataFromAsync);
       setToken(data.token);
-      console.log(token)
       setIsLogin(true);
     } else {
       setIsLogin(false);
