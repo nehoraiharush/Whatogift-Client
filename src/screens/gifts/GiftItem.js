@@ -1,15 +1,56 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as actions from '../../../store/actions';
+
 import Colors from '../../utilies/AppColors'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const GiftItem = props => {
 
     const product = props.gift.product;
 
+    const [token, setToken] = useState('');
+    const [errorMsg, setErrorMsg] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const hasToken = useCallback(async () => {
+        const dataFromAsync = await AsyncStorage.getItem('Account');
+        if (dataFromAsync != null) {
+            const data = JSON.parse(dataFromAsync);
+            setToken(data.token);
+        }
+    }, [token])
+
+    useEffect(() => {
+        hasToken();
+    }, [hasToken]);
+
+    useEffect(() => {
+        getWishList();
+    }, []);
+
+    const getWishList = useCallback(async => {
+
+        try {
+            const action = actions.get_wishlist(
+                token
+            );
+            dispatch(action);
+        } catch (error) {
+            Alert.alert('Get Wishlist', error.message);
+        }
+
+    })
+    const favoriets_gift = useSelector((state) => state.appReducer.wishlist?.message);
+    console.log("Favorite Gift: " + JSON.stringify(favoriets_gift))
+
     return (
-        <TouchableOpacity onPress={props.onClick} style={styles.row}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('viewGift', { product: props.gift, isFavorite: JSON.stringify(favoriets_gift).includes(JSON.stringify(product._id)) ? true : false })} style={styles.row}>
             <View style={styles.product_row}>
                 <View style={styles.image_container}>
                     <View style={styles.brand}>

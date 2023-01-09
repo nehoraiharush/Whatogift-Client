@@ -284,7 +284,7 @@ const Gift = (props) => {
                             data={giftData?.giftList?.message}
                             keyExtractor={(company) => company.product._id}
                             renderItem={comapny =>
-                                <GiftItem gift={comapny.item} onClick={() => props.navigation.navigate('viewGift', { product: comapny.item })} />
+                                <GiftItem gift={comapny.item} navigation={props.navigation} />
                             } />
                     ) :
                     (

@@ -54,6 +54,7 @@ const ViewGift = (props) => {
         }
 
     })
+    console.log(props.isFavorite)
     return (
         <View style={{ flex: 1 }}>
 

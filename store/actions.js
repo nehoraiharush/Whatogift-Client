@@ -5,7 +5,7 @@ export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
 export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
 export const GET_WISHLIST = "GET_WISHLIST";
-const IP = '10.0.0.20';
+const IP = '192.168.185.48';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');

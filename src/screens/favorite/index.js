@@ -42,6 +42,9 @@ const Favorite = (props) => {
     })
 
     const favoriets_gift = useSelector((state) => state.appReducer.wishlist?.message);
+    //console.log("Favorite Gift 2: " + favoriets_gift)
+
+
 
     return (
         <View style={Style.container}>
