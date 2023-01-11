@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ActivityIndicator } from "react-native";
 import Colors from '../../utilies/AppColors'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,21 +14,10 @@ const ViewGift = (props) => {
     const product = props.route.params.product.product;
     const distance = props.route.params.product.distance;
 
-    const [isLiked, setIsLiked] = useState(null);
-    const [typeOfAction, setTypeOfAction] = useState(null);
-
     const [token, setToken] = useState('');
     const [errorMsg, setErrorMsg] = useState(null);
 
-    //not pressing after few times
-    //and it doesnt remove when i undo the heart mark
-    useEffect(() => {
-        setIsLiked(!isLiked);
-
-        updateWishList();
-    }, [typeOfAction]);
-
-
+    //TOKEN
     const hasToken = useCallback(async () => {
 
         const dataFromAsync = await AsyncStorage.getItem('Account');
@@ -42,11 +31,11 @@ const ViewGift = (props) => {
         hasToken();
     }, [hasToken]);
 
-
+    //updating when clicking the heart
     const updateWishList = useCallback(async => {
         try {
             const action = actions.updateWishList(
-                token, product._id, typeOfAction
+                token, product._id
             );
             dispatch(action);
         } catch (error) {
@@ -54,7 +43,10 @@ const ViewGift = (props) => {
         }
 
     })
-    console.log(props.isFavorite)
+
+    const favoriets_gift = useSelector((state) => state.appReducer.myData?.favorites);
+    console.log("VIEWGIFT: " + favoriets_gift);
+
     return (
         <View style={{ flex: 1 }}>
 
@@ -78,21 +70,19 @@ const ViewGift = (props) => {
                     </View>
                 </View>
                 <View style={{ paddingTop: 10, justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={() => { setTypeOfAction(!typeOfAction) }}>
-                        {isLiked ?
+
+                    <TouchableOpacity onPress={() => updateWishList()}>
+                        {favoriets_gift !== undefined && JSON.stringify(favoriets_gift).includes(JSON.stringify(product._id)) ?
                             (
-                                <TouchableOpacity onPress={() => { setTypeOfAction(false) }}>
-                                    <Ionicons name="ios-heart" size={40} color={Colors.red} />
-                                </TouchableOpacity>
+                                <Ionicons name="ios-heart" size={40} color={Colors.red} />
                             )
                             :
                             (
-                                <TouchableOpacity onPress={() => { setTypeOfAction(true) }}>
-                                    <Ionicons name="ios-heart-outline" size={40} color={Colors.white} />
-                                </TouchableOpacity>
+                                <Ionicons name="ios-heart-outline" size={40} color={Colors.white} />
                             )
                         }
                     </TouchableOpacity>
+
 
                 </View>
             </View>

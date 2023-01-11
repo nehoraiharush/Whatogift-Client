@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../utilies/AppColors';
 import * as actions from '../../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Location from 'expo-location';
 
 import firebase from "../../utilies/firebaseConfig";
@@ -20,6 +20,7 @@ const Dashboard = (props) => {
     const [location, setLocation] = useState(null);
     const [companiesData, setCompaniesData] = useState(null);
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         if (errorMsg) {
@@ -43,34 +44,42 @@ const Dashboard = (props) => {
         getDataFromAsync();
     }, [getDataFromAsync]);
 
-
     useEffect(() => {
-        (async () => {
-
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-
-            if (token && location) {
-                const action = await actions.getAllCompaniesByLocation(token, location);
-
-                try {
-                    dispatch(action);
-
-                } catch (error) {
-                    setErrorMsg(error.message)
-                    throw new Error(errorMsg)
-                }
-            }
-
-        })();
+        if (token !== '' && token !== undefined) {
+            const action = actions.getMyData(token);
+            dispatch(action);
+        }
     }, []);
 
+    // useEffect(() => {
+    //     (async () => {
+
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //             setErrorMsg('Permission to access location was denied');
+    //             return;
+    //         }
+
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         setLocation(location);
+
+    //         if (token && location) {
+    //             const action = await actions.getAllCompaniesByLocation(token, location);
+
+    //             try {
+    //                 dispatch(action);
+
+    //             } catch (error) {
+    //                 setErrorMsg(error.message)
+    //                 throw new Error(errorMsg)
+    //             }
+    //         }
+
+    //     })();
+    // }, []);
+
+    const favoriets_gift = useSelector((state) => state.appReducer.myData);
+    console.log("DASHBOAED " + JSON.stringify(favoriets_gift));
 
     return (
         <View style={Style.container}>

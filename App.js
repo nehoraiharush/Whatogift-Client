@@ -13,7 +13,8 @@ import reducers from './store/reducers';
 const rootReducer = combineReducers({
   appReducer: reducers,
   giftList: reducers,
-  wishlist: reducers
+  wishlist: reducers,
+  myData: reducers
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
@@ -45,7 +46,6 @@ export default function App() {
       setIsAuth(!!user)
     })
   }
-
 
   return (
     <Provider store={store}>

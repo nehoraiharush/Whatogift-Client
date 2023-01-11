@@ -41,7 +41,7 @@ const Favorite = (props) => {
 
     })
 
-    const favoriets_gift = useSelector((state) => state.appReducer.wishlist?.message);
+    const favoriets_gift = useSelector((state) => state.appReducer.myData?.favorites);
     //console.log("Favorite Gift 2: " + favoriets_gift)
 
 

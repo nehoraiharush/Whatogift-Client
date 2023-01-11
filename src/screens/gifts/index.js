@@ -126,7 +126,6 @@ const Gift = (props) => {
     })
 
     const giftData = useSelector((state) => state.giftList);
-    //console.log("My Gifts: " + JSON.stringify(giftData))
 
     return (
         <View style={Style.container}>
@@ -277,11 +276,11 @@ const Gift = (props) => {
             </Modal>
 
             {
-                giftData ?
+                giftData !== undefined ?
                     (
 
-                        <FlatList
-                            data={giftData?.giftList?.message}
+                        < FlatList
+                            data={giftData?.giftList}
                             keyExtractor={(company) => company.product._id}
                             renderItem={comapny =>
                                 <GiftItem gift={comapny.item} navigation={props.navigation} />

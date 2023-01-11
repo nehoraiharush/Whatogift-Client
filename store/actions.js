@@ -5,7 +5,8 @@ export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
 export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
 export const GET_WISHLIST = "GET_WISHLIST";
-const IP = '192.168.185.48';
+export const GET_MY_DATA = "GET_MY_DATA";
+const IP = '10.70.1.66';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -43,7 +44,8 @@ export const login = (email, password) => {
                     email: data.message.email,
                     avatar: data.message.avatar
                 }));
-                dispatch(loginDispatch(data));
+                dispatch(loginDispatch(data.message));
+                dispatch(getMyData(data.token));
 
             } else {
                 let message = data.message;
@@ -82,8 +84,8 @@ export const signup = (email, password, firstName, lastName, uid) => {
                     email: data.message.email,
                     avatar: data.message.avatar
                 }));
-                dispatch(loginDispatch(data));
-
+                dispatch(loginDispatch(data.message));
+                dispatch(getMyData(data.token));
             } else {
                 let message = data.message;
                 throw new Error(message);
@@ -95,7 +97,36 @@ export const signup = (email, password, firstName, lastName, uid) => {
     }
 }
 
+export const getMyData = (token) => {
+    return async dispatch => {
+        try {
+            const url = `http://${IP}:3001/api/account/getOverView`;
+            const request = await fetch(url, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
 
+            const data = await request.json();
+
+            if (data.status) {
+                dispatch(getMyDataDispatch(data.message))
+            } else {
+                let message = data.message;
+                throw new Error(message);
+            }
+        } catch (error) {
+            console.log('GET_MY_DATA: ' + JSON.stringify(error));
+        }
+    }
+}
+export const getMyDataDispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: GET_MY_DATA, data: data })
+    }
+}
 
 export const getAllCompaniesByLocationDispatch = () => {
     return dispatch => {
@@ -139,7 +170,7 @@ export const updateWishListDispatch = (data) => {
         dispatch({ type: UPDATE_WISHLIST, data: data });
     }
 }
-export const updateWishList = (token, favoriets, typeOfAction) => {
+export const updateWishList = (token, favoriets) => {
     return async dispatch => {
         try {
             const url = `http://${IP}:3001/api/account/add_to_favorites`;
@@ -152,13 +183,13 @@ export const updateWishList = (token, favoriets, typeOfAction) => {
                 },
                 body: JSON.stringify({
                     favorites: favoriets,
-                    typeOfAction: typeOfAction
                 })
             });
             req.json()
                 .then(data => {
                     if (data.status) {
-                        dispatch(updateWishListDispatch(data))
+                        dispatch(updateWishListDispatch(data.message))
+                        dispatch(getMyData(token));
                     } else {
                         console.log("WishList: No data for you");
                     }
@@ -209,7 +240,7 @@ export const find_gift = (
             req.json()
                 .then(data => {
                     if (data.status) {
-                        dispatch(find_gift_dispatch(data))
+                        dispatch(find_gift_dispatch(data.message))
                     } else {
                         console.log("Find Gift: No data for you");
                     }
@@ -246,7 +277,7 @@ export const get_wishlist = (token) => {
                 .then(data => {
                     if (data.status) {
 
-                        dispatch(get_wishlist_dispatch(data));
+                        dispatch(get_wishlist_dispatch(data.message));
 
                     } else {
                         console.log("GET WISHLIST: No data Found");
