@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Style from '../../utilies/AppStyle';
 import * as actions from '../../../store/actions';
+import GiftItem from "../gifts/GiftItem";
 
 const Favorite = (props) => {
 
@@ -24,38 +25,29 @@ const Favorite = (props) => {
         hasToken();
     }, [hasToken]);
 
-    useEffect(() => {
-        getWishList();
-    }, []);
-
-    const getWishList = useCallback(async => {
-
-        try {
-            const action = actions.get_wishlist(
-                token
-            );
-            dispatch(action);
-        } catch (error) {
-            Alert.alert('Get Wishlist', error.message);
-        }
-
-    })
-
     const favoriets_gift = useSelector((state) => state.appReducer.myData?.favorites);
-    //console.log("Favorite Gift 2: " + favoriets_gift)
 
+    const giftData = useSelector((state) => state.giftList?.giftList);
+    console.log("GIFT DATA: " + JSON.stringify(giftData));
 
 
     return (
         <View style={Style.container}>
 
             {
-                !token || favoriets_gift === undefined || favoriets_gift.length === 0 ?
+                !token || favoriets_gift === undefined || favoriets_gift.length === 0 || giftData === undefined || giftData.length === 0 ?
                     (
                         <Text>No Favorites Found</Text>
                     ) :
                     (
-                        <Text>{favoriets_gift}</Text>
+                        Object.values(giftData).filter((prod) => Object.values(favoriets_gift).filter((fav) => fav === prod.product._id).length > 0).map((prod, index) => {
+                            return (
+                                <TouchableOpacity key={index}>
+                                    <GiftItem gift={prod} navigation={props.navigation} />
+                                </TouchableOpacity>
+
+                            );
+                        })
                     )
             }
 

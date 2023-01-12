@@ -48,7 +48,7 @@ export const FavoriteStack = () => {
     return (
         <FavoriteStackNavigator.Navigator screenOptions={defaultOptions}>
             <FavoriteStackNavigator.Screen name='favorite' component={Favorite} />
-            <FavoriteStackNavigator.Screen name='Favorite Test' component={FavoriteTest} />
+            <FavoriteStackNavigator.Screen name='viewGift' component={ViewGift} />
         </FavoriteStackNavigator.Navigator>
     );
 }
@@ -84,6 +84,7 @@ export const AccountStack = () => {
         </AccountStackNavigator.Navigator>
     )
 }
+
 
 //CREATE TABS
 const AppTabs = createMaterialBottomTabNavigator();

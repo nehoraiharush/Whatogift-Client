@@ -49,7 +49,7 @@ const Dashboard = (props) => {
             const action = actions.getMyData(token);
             dispatch(action);
         }
-    }, []);
+    }, [token]);
 
     // useEffect(() => {
     //     (async () => {
@@ -78,8 +78,6 @@ const Dashboard = (props) => {
     //     })();
     // }, []);
 
-    const favoriets_gift = useSelector((state) => state.appReducer.myData);
-    console.log("DASHBOAED " + JSON.stringify(favoriets_gift));
 
     return (
         <View style={Style.container}>

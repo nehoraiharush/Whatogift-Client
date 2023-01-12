@@ -4,9 +4,8 @@ export const LOGOUT = 'LOGOUT';
 export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
 export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
-export const GET_WISHLIST = "GET_WISHLIST";
 export const GET_MY_DATA = "GET_MY_DATA";
-const IP = '10.70.1.66';
+const IP = '10.0.0.30';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');
@@ -252,44 +251,4 @@ export const find_gift = (
             console.log("find_gift: " + JSON.stringify(error.message));
         }
     }
-}
-
-
-export const get_wishlist_dispatch = (data) => {
-    return dispatch => {
-        dispatch({ type: GET_WISHLIST, data: data });
-    }
-}
-export const get_wishlist = (token) => {
-
-    return async dispatch => {
-        try {
-
-            const url = `http://${IP}:3001/api/account/get_wishlist`;
-            const req = await fetch(url, {
-                method: 'get',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${token}`,
-                }
-            });
-            req.json()
-                .then(data => {
-                    if (data.status) {
-
-                        dispatch(get_wishlist_dispatch(data.message));
-
-                    } else {
-                        console.log("GET WISHLIST: No data Found");
-                    }
-                })
-                .catch(err => {
-                    console.log("GET WISHLIST: " + JSON.stringify(err.message));
-                });
-
-        } catch (error) {
-            console.log("get_wishlist: " + JSON.stringify(error.message))
-        }
-    }
-
 }

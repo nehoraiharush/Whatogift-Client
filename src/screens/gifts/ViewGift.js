@@ -45,7 +45,6 @@ const ViewGift = (props) => {
     })
 
     const favoriets_gift = useSelector((state) => state.appReducer.myData?.favorites);
-    console.log("VIEWGIFT: " + favoriets_gift);
 
     return (
         <View style={{ flex: 1 }}>

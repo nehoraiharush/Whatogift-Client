@@ -1,4 +1,4 @@
-import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS, UPDATE_WISHLIST, GET_WISHLIST, GET_MY_DATA } from './actions';
+import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS, UPDATE_WISHLIST, GET_MY_DATA } from './actions';
 
 const initialState = {
 
@@ -26,11 +26,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 appReducer: action.data
-            }
-        case GET_WISHLIST:
-            return {
-                ...state,
-                wishlist: action.data
             }
         case GET_MY_DATA:
             return {
