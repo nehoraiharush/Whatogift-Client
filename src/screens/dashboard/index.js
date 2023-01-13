@@ -21,13 +21,11 @@ const Dashboard = (props) => {
     const [companiesData, setCompaniesData] = useState(null);
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         if (errorMsg) {
             Alert.alert('Dashboard', errorMsg);
         }
     }, [errorMsg]);
-
 
     const getDataFromAsync = useCallback(async () => {
         const dataFromAsync = await AsyncStorage.getItem('Account');
@@ -38,7 +36,6 @@ const Dashboard = (props) => {
         }
 
     }, [setToken]);
-
 
     useEffect(() => {
         getDataFromAsync();
@@ -51,33 +48,46 @@ const Dashboard = (props) => {
         }
     }, [token]);
 
-    // useEffect(() => {
-    //     (async () => {
+    //find location
+    useEffect(() => {
+        (async () => {
 
-    //         let { status } = await Location.requestForegroundPermissionsAsync();
-    //         if (status !== 'granted') {
-    //             setErrorMsg('Permission to access location was denied');
-    //             return;
-    //         }
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
 
-    //         let location = await Location.getCurrentPositionAsync({});
-    //         setLocation(location);
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
 
-    //         if (token && location) {
-    //             const action = await actions.getAllCompaniesByLocation(token, location);
+            // if (token && location) {
+            //     const action = await actions.getAllCompaniesByLocation(token, location);
 
-    //             try {
-    //                 dispatch(action);
+            //     try {
+            //         dispatch(action);
+            //     } catch (error) {
+            //         setErrorMsg(error.message)
+            //         throw new Error(errorMsg)
+            //     }
+            // }
 
-    //             } catch (error) {
-    //                 setErrorMsg(error.message)
-    //                 throw new Error(errorMsg)
-    //             }
-    //         }
+        })();
+    }, []);
 
-    //     })();
-    // }, []);
+    useEffect(() => {
+        get_all_products();
+    }, [location]);
+    const get_all_products = useCallback(async => {
+        try {
+            const action = actions.get_all_products(location);
+            dispatch(action);
+        } catch (error) {
+            console.log(error.message);
+        }
 
+    })
+    const giftData = useSelector((state) => state.giftList.giftList);
 
     return (
         <View style={Style.container}>
@@ -85,11 +95,11 @@ const Dashboard = (props) => {
                 {user.email}
             </Text>
 
-            <View style={{ width: '100%', backgroundColor: '#DFE0E0', padding: 10, marginTop: 10, borderRadius: 20, marginBottom: 15 }}>
+            {/* <View style={{ width: '100%', backgroundColor: '#DFE0E0', padding: 10, marginTop: 10, borderRadius: 20, marginBottom: 15 }}>
                 <Text style={{ textAlign: 'center' }}>
                     HII
                 </Text>
-            </View>
+            </View> */}
             <Button onPress={() => { firebase.auth().signOut() }} title='Logout' />
 
         </View>

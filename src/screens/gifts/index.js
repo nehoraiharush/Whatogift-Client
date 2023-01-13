@@ -70,55 +70,32 @@ const Gift = (props) => {
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     }, []);
-    //find location
-    useEffect(() => {
-        (async () => {
 
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
 
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-
-            if (token && location) {
-                const action = await actions.getAllCompaniesByLocation(token, location);
-
-                try {
-                    dispatch(action);
-                } catch (error) {
-                    setErrorMsg(error.message)
-                    throw new Error(errorMsg)
-                }
-            }
-
-        })();
-    }, []);
     //find token
-    const hasToken = useCallback(async () => {
+    // const hasToken = useCallback(async () => {
 
-        const dataFromAsync = await AsyncStorage.getItem('Account');
-        if (dataFromAsync != null) {
-            const data = JSON.parse(dataFromAsync);
-            setToken(data.token);
-        }
-    }, [token])
+    //     const dataFromAsync = await AsyncStorage.getItem('Account');
+    //     if (dataFromAsync != null) {
+    //         const data = JSON.parse(dataFromAsync);
+    //         setToken(data.token);
+    //     }
+    // }, [token])
 
-    useEffect(() => {
-        hasToken();
-    }, [hasToken])
+    // useEffect(() => {
+    //     hasToken();
+    // }, [hasToken])
 
     const find_gift_action = useCallback(async => {
         setModalVisible(false)
         try {
-            const action = actions.find_gift(
-                token, location, eventTags, gender,
-                budget, interstsTags, age,
-                locationRadius, related
-            );
-            dispatch(action);
+            // const action = actions.find_gift(
+            //     token, location, eventTags, gender,
+            //     budget, interstsTags, age,
+            //     locationRadius, related
+            // );
+            // dispatch(action);
+            Alert.alert('Find my gift', "NEED TO CHANGE THE CALLED FUNCTION");
         } catch (error) {
             Alert.alert('Find my gift', error.message);
         }

@@ -1,4 +1,4 @@
-import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS, UPDATE_WISHLIST, GET_MY_DATA } from './actions';
+import { LOGIN, GETALLCOMPANIESBYLOCATION, GET_GIFTS, UPDATE_WISHLIST, GET_MY_DATA, GET_ALL_PRODUCTS } from './actions';
 
 const initialState = {
 
@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
         case GET_GIFTS:
             return {
                 ...state,
-                giftList: action.data
+                releventGifts: action.data
             }
         case UPDATE_WISHLIST:
             return {
@@ -31,6 +31,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 myData: action.data
+            }
+        case GET_ALL_PRODUCTS:
+            return {
+                ...state,
+                giftList: action.data
             }
         default:
             return state;

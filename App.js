@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
   appReducer: reducers,
   giftList: reducers,
   wishlist: reducers,
-  myData: reducers
+  myData: reducers,
+  releventGifts: reducers
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 

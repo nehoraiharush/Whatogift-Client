@@ -5,6 +5,7 @@ export const GETALLCOMPANIESBYLOCATION = 'GETALLCOMPANIESBYLOCATION';
 export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
 export const GET_MY_DATA = "GET_MY_DATA";
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 const IP = '10.0.0.30';
 
 export const logout = () => {
@@ -203,7 +204,6 @@ export const updateWishList = (token, favoriets) => {
     }
 }
 
-
 export const find_gift_dispatch = (data) => {
     return dispatch => {
         dispatch({ type: GET_GIFTS, data: data });
@@ -249,6 +249,44 @@ export const find_gift = (
                 });
         } catch (error) {
             console.log("find_gift: " + JSON.stringify(error.message));
+        }
+    }
+}
+
+
+export const get_all_products_dispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: GET_ALL_PRODUCTS, data: data });
+    }
+}
+export const get_all_products = (location) => {
+    return async dispatch => {
+        try {
+            const url = `http://${IP}:3001/api/product/get_all_products`;
+            const req = await fetch(url, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude
+                })
+            });
+            req.json()
+                .then(data => {
+                    if (data.status) {
+
+                        dispatch(get_all_products_dispatch(data.message))
+                    } else {
+                        console.log("GET ALL PRODUCTS: No data for you");
+                    }
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
+        } catch (error) {
+            console.log("get_all_products: " + JSON.stringify(error.message));
         }
     }
 }

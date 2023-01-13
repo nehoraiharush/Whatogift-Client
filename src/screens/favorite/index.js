@@ -28,7 +28,6 @@ const Favorite = (props) => {
     const favoriets_gift = useSelector((state) => state.appReducer.myData?.favorites);
 
     const giftData = useSelector((state) => state.giftList?.giftList);
-    console.log("GIFT DATA: " + JSON.stringify(giftData));
 
 
     return (
