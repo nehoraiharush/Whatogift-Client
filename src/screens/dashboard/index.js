@@ -79,15 +79,15 @@ const Dashboard = (props) => {
         get_all_products();
     }, [location]);
     const get_all_products = useCallback(async => {
-        try {
-            const action = actions.get_all_products(location);
-            dispatch(action);
-        } catch (error) {
-            console.log(error.message);
+        if (location !== null) {
+            try {
+                const action = actions.get_all_products(location);
+                dispatch(action);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
-
     })
-    const giftData = useSelector((state) => state.giftList.giftList);
 
     return (
         <View style={Style.container}>

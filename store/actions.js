@@ -6,6 +6,7 @@ export const GET_GIFTS = "GET_GIFTS";
 export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
 export const GET_MY_DATA = "GET_MY_DATA";
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
+export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
 const IP = '10.0.0.30';
 
 export const logout = () => {
@@ -276,7 +277,6 @@ export const get_all_products = (location) => {
             req.json()
                 .then(data => {
                     if (data.status) {
-
                         dispatch(get_all_products_dispatch(data.message))
                     } else {
                         console.log("GET ALL PRODUCTS: No data for you");
@@ -287,6 +287,54 @@ export const get_all_products = (location) => {
                 });
         } catch (error) {
             console.log("get_all_products: " + JSON.stringify(error.message));
+        }
+    }
+}
+
+export const update_account_dispatch = (data) => {
+    return dispatch => {
+        dispatch({ type: UPDATE_ACCOUNT, data: data });
+    }
+}
+export const update_account = (token, firstName, lastName, email, password, dob, gender, avatar,
+    address, city, state, zipCode, mobile) => {
+    return async dispatch => {
+        try {
+            const url = `http://${IP}:3001/api/account/update_account`;
+            const req = await fetch(url, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    dob: dob,
+                    gender: gender,
+                    avatar: avatar,
+                    address: address,
+                    city: city,
+                    state: state,
+                    zipCode: zipCode,
+                    mobile: mobile
+                })
+            });
+            req.json()
+                .then(data => {
+                    if (data.status) {
+                        dispatch(update_account_dispatch(data.message))
+                        dispatch(getMyData(token));
+                    } else {
+                        console.log("UPDATE ACCOUNT: No data for you");
+                    }
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
+        } catch (error) {
+            console.log("update_account: " + JSON.stringify(error.message));
         }
     }
 }
