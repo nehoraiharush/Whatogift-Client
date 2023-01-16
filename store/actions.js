@@ -7,7 +7,7 @@ export const UPDATE_WISHLIST = "UPDATE_WISHLIST";
 export const GET_MY_DATA = "GET_MY_DATA";
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
-const IP = '10.0.0.30';
+const IP = '172.20.8.161';
 
 export const logout = () => {
     AsyncStorage.removeItem('Account');

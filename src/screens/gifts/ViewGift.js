@@ -53,12 +53,11 @@ const ViewGift = (props) => {
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ margin: 10, backgroundColor: '#DFE0E0', borderRadius: 20, width: '80%' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Ionicons size={18} color={Colors.pink} name='md-location-sharp' />
-                        <Text style={{ fontSize: 15, marginRight: 5, textAlign: 'center' }}>{(distance / 1000).toFixed(0)}km</Text>
+                        <Ionicons size={20} color={Colors.pink} name='md-location-sharp' />
+                        <Text style={{ fontSize: 20, marginRight: 5, textAlign: 'center' }}>{(distance / 1000).toFixed(0)}km</Text>
                         <Text style={{ fontSize: 24, padding: 5, fontWeight: '700' }}>
                             {product.productName}
                         </Text>
-
                     </View>
                     <View style={{ marginBottom: 8 }}>
                         <ScrollView>
@@ -68,9 +67,9 @@ const ViewGift = (props) => {
                         </ScrollView>
                     </View>
                 </View>
-                <View style={{ paddingTop: 10, justifyContent: 'center' }}>
-
-                    <TouchableOpacity onPress={() => updateWishList()}>
+                <View style={{ paddingTop: 10 }}>
+                    <Text style={{ fontWeight: '800', fontSize: 21, paddingTop: 5 }}>${product.productPrice}</Text>
+                    <TouchableOpacity style={{ paddingTop: 7 }} onPress={() => updateWishList()}>
                         {favoriets_gift !== undefined && JSON.stringify(favoriets_gift).includes(JSON.stringify(product._id)) ?
                             (
                                 <Ionicons name="ios-heart" size={40} color={Colors.red} />
